@@ -1,0 +1,1592 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Harency ApplicationAPI",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/auth/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Sign In",
+                "description": "Login by phone number, password",
+                "operationId": "authLogin",
+                "requestBody": {
+                    "description": "Pass user credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "phone_number",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "phone_number": {
+                                        "type": "string",
+                                        "format": "phone_number",
+                                        "example": "9786543210"
+                                    },
+                                    "country_code": {
+                                        "type": "string",
+                                        "format": "country_code",
+                                        "example": "91"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "PassWord12345"
+                                    },
+                                    "device_token": {
+                                        "type": "string",
+                                        "format": "device_token",
+                                        "example": "1232443bcvhsdgdfs"
+                                    },
+                                    "device_type": {
+                                        "type": "string",
+                                        "format": "device_type",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sorry, wrong phone number or password. Please try again"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/auth/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Sign Up",
+                "description": "Sign up by phone number, password",
+                "operationId": "authSignUp",
+                "requestBody": {
+                    "description": "Pass user details",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "phone_number",
+                                    "password",
+                                    "country_code"
+                                ],
+                                "properties": {
+                                    "phone_number": {
+                                        "type": "string",
+                                        "format": "phone_number",
+                                        "example": "9786543210"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "PassWord12345"
+                                    },
+                                    "device_token": {
+                                        "type": "string",
+                                        "format": "device_token",
+                                        "example": "1232443bcvhsdgdfs"
+                                    },
+                                    "country_code": {
+                                        "type": "string",
+                                        "format": "country_code",
+                                        "example": "91"
+                                    },
+                                    "device_type": {
+                                        "type": "string",
+                                        "format": "device_type",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sorry, wrong phone number or password. Please try again"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Logout",
+                "description": "Logout user and invalidate token",
+                "operationId": "authLogout",
+                "requestBody": {
+                    "description": "Pass user details",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "device_token",
+                                    "device_type"
+                                ],
+                                "properties": {
+                                    "device_token": {
+                                        "type": "string",
+                                        "format": "device_token",
+                                        "example": "1232443bcvhsdgdfs"
+                                    },
+                                    "device_type": {
+                                        "type": "string",
+                                        "format": "device_type",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "401": {
+                        "description": "Returns when user is not authenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Not authorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/get_card": {
+            "get": {
+                "tags": [
+                    "Card"
+                ],
+                "summary": "Get card details",
+                "description": "Get card details",
+                "operationId": "authGetCard",
+                "responses": {
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sorry, wrong invalid credentials. Please try again"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/delete_card": {
+            "post": {
+                "tags": [
+                    "Card"
+                ],
+                "summary": "Delete Card",
+                "description": "Delete user card",
+                "operationId": "authDeleteCard",
+                "requestBody": {
+                    "description": "Pass user card details Id",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "card_id"
+                                ],
+                                "properties": {
+                                    "card_id": {
+                                        "type": "string",
+                                        "format": "card_id",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sorry, wrong card details. Please try again"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/add_card": {
+            "post": {
+                "tags": [
+                    "Card"
+                ],
+                "summary": "Add Card",
+                "description": "Create user card",
+                "operationId": "authCreateCard",
+                "requestBody": {
+                    "description": "Pass user card details",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "card_holder_name",
+                                    "card_number",
+                                    "expiry_date",
+                                    "cvv",
+                                    "card_type",
+                                    "default_card"
+                                ],
+                                "properties": {
+                                    "card_holder_name": {
+                                        "type": "string",
+                                        "format": "card_holder_name",
+                                        "example": "john walker"
+                                    },
+                                    "card_number": {
+                                        "type": "string",
+                                        "format": "card_number",
+                                        "example": "4242424242424242"
+                                    },
+                                    "expiry_date": {
+                                        "type": "string",
+                                        "format": "expiry_date",
+                                        "example": "08/26"
+                                    },
+                                    "cvv": {
+                                        "type": "string",
+                                        "format": "cvv",
+                                        "example": "111"
+                                    },
+                                    "card_type": {
+                                        "type": "string",
+                                        "format": "card_type",
+                                        "example": "visa"
+                                    },
+                                    "default_card": {
+                                        "type": "string",
+                                        "format": "default_card",
+                                        "example": "primary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sorry, wrong card details. Please try again"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/make_card_primary": {
+            "post": {
+                "tags": [
+                    "Card"
+                ],
+                "summary": "Make card as primary",
+                "description": "Make card as primary",
+                "operationId": "authMakeCardPrimary",
+                "requestBody": {
+                    "description": "Pass card_id and default_card",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "card_id",
+                                    "default_card"
+                                ],
+                                "properties": {
+                                    "card_id": {
+                                        "type": "string",
+                                        "format": "card_id",
+                                        "example": "2"
+                                    },
+                                    "default_card": {
+                                        "type": "string",
+                                        "format": "default_card",
+                                        "example": "primary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sorry, wrong card details. Please try again"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/send_otp": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Send Otp",
+                "description": "Send otp to verify user",
+                "operationId": "authSendOtp",
+                "requestBody": {
+                    "description": "Pass user phone number and type if its 0 or 1,0 for verify user and 1 for forgot password",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "phone_number",
+                                    "type"
+                                ],
+                                "properties": {
+                                    "phone_number": {
+                                        "type": "string",
+                                        "format": "phone_number",
+                                        "example": "9786543210"
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "format": "type",
+                                        "example": "0"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Wrong Phone number response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sorry, wrong phone number. Please try again"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/auth/reset_password": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Reset Password",
+                "description": "Reset user password",
+                "operationId": "authResetpassword",
+                "requestBody": {
+                    "description": "Pass user password and otp",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "password",
+                                    "otp"
+                                ],
+                                "properties": {
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password"
+                                    },
+                                    "otp": {
+                                        "type": "string",
+                                        "format": "otp",
+                                        "example": "046677"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Wrong response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sorry, wrong otp number. Please try again"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/auth/social_media_login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login with Social Media",
+                "description": "Login with social media :- Facebook, Instagram, Twitter, Google ",
+                "operationId": "authSocialLogin",
+                "requestBody": {
+                    "description": "Pass user phone number, name, email, social media id, social media type <br><br>social_media_type:<br> 1 for facebook, <br> 2 for google, <br> 3 for instagram, <br>  4 for twitter",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "social_id",
+                                    "social_media_type"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "abc"
+                                    },
+                                    "email": {
+                                        "type": "email",
+                                        "example": "abc@example.com"
+                                    },
+                                    "social_id": {
+                                        "type": "string",
+                                        "example": "kjh435h43kj5"
+                                    },
+                                    "social_media_type": {
+                                        "type": "number",
+                                        "example": 1
+                                    },
+                                    "device_token": {
+                                        "type": "string",
+                                        "format": "device_token",
+                                        "example": "1232443bcvhsdgdfs"
+                                    },
+                                    "device_type": {
+                                        "type": "string",
+                                        "format": "device_type",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "500": {
+                        "description": "Wrong response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Something went wrong, please try again"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/payment": {
+            "post": {
+                "tags": [
+                    "Payment"
+                ],
+                "summary": "Send and request payment",
+                "description": "Send and request payment",
+                "operationId": "authsendrequest",
+                "responses": {
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sorry, wrong invalid credentials. Please try again"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/change_password": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Change Password",
+                "description": "Change password for user",
+                "operationId": "authChangePassword",
+                "requestBody": {
+                    "description": "Pass user current password and new password",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "current_password",
+                                    "new_password"
+                                ],
+                                "properties": {
+                                    "current_password": {
+                                        "type": "string",
+                                        "format": "current_password",
+                                        "example": "password"
+                                    },
+                                    "new_password": {
+                                        "type": "string",
+                                        "format": "new_password",
+                                        "example": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sorry, wrong credentials. Please try again"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/get_profile": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get Profile",
+                "description": "Get user profile",
+                "operationId": "authGetProfile",
+                "responses": {
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sorry, wrong invalid email or name. Please try again"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/update_profile": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update Profile",
+                "description": "Update profile for user",
+                "operationId": "authUpdateProfile",
+                "requestBody": {
+                    "description": "Pass user details",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "format": "name",
+                                        "example": "john"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "abc@gmail.com"
+                                    },
+                                    "phone_number": {
+                                        "type": "string",
+                                        "format": "phone_number",
+                                        "example": "1234567890"
+                                    },
+                                    "country_code": {
+                                        "type": "string",
+                                        "format": "country_code",
+                                        "example": "91"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sorry, wrong invalid email or name. Please try again"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/upload_image": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Upload Image",
+                "description": "Upload Image",
+                "operationId": "authUploadImage",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "image"
+                                ],
+                                "properties": {
+                                    "image": {
+                                        "description": "Image to upload",
+                                        "type": "file",
+                                        "format": "file"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Wrong format response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sorry, wrong Format. Please try again"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/create_profile": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Create Profile",
+                "description": "Create profile for user",
+                "operationId": "authCreateProfile",
+                "requestBody": {
+                    "description": "Pass user name and email",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "format": "name",
+                                        "example": "john"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "abc@gmail.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sorry, wrong invalid email or name. Please try again"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/add_phone_number": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Add Phone Number",
+                "description": "Add phone number if user not getting and phone number from social login api",
+                "operationId": "authAddPhoneNumber",
+                "requestBody": {
+                    "description": "Pass user phone number",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "phone_number",
+                                    "country_code"
+                                ],
+                                "properties": {
+                                    "phone_number": {
+                                        "type": "string",
+                                        "format": "phone_number",
+                                        "example": "9786543210"
+                                    },
+                                    "country_code": {
+                                        "type": "string",
+                                        "format": "country_code",
+                                        "example": "91"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sorry, wrong credentials. Please try again"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/create_password": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Create Password",
+                "description": "Create password for user",
+                "operationId": "authCreatePassword",
+                "requestBody": {
+                    "description": "Pass user password",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "password"
+                                ],
+                                "properties": {
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sorry, wrong credentials. Please try again"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/transaction/create": {
+            "post": {
+                "tags": [
+                    "Transaction"
+                ],
+                "summary": "Create Transaction",
+                "description": "Create transaction for sending or requesting payment",
+                "operationId": "authCreateTransaction",
+                "requestBody": {
+                    "description": "Pass transaction details with sender and receiver information",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "sender_id",
+                                    "sender_phone",
+                                    "receiver_phone",
+                                    "amount",
+                                    "notes",
+                                    "receiver_name",
+                                    "payment_type",
+                                    "receiver_id"
+                                ],
+                                "properties": {
+                                    "sender_id": {
+                                        "type": "integer",
+                                        "format": "sender_id",
+                                        "example": 2
+                                    },
+                                    "sender_phone": {
+                                        "type": "string",
+                                        "format": "sender_phone",
+                                        "example": "9632014785"
+                                    },
+                                    "receiver_phone": {
+                                        "type": "string",
+                                        "format": "receiver_phone",
+                                        "example": "8521036974"
+                                    },
+                                    "amount": {
+                                        "type": "numeric",
+                                        "format": "amount",
+                                        "example": 1000
+                                    },
+                                    "notes": {
+                                        "type": "string",
+                                        "format": "notes",
+                                        "example": "payment for test"
+                                    },
+                                    "receiver_name": {
+                                        "type": "string",
+                                        "format": "receiver_name",
+                                        "example": "John"
+                                    },
+                                    "payment_type": {
+                                        "type": "integer",
+                                        "format": "payment_type",
+                                        "example": "1 for Request payment, 0 for send payment"
+                                    },
+                                    "receiver_id": {
+                                        "type": "integer",
+                                        "format": "receiver_id",
+                                        "example": 3
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sorry, wrong credentials. Please try again"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/transactions": {
+            "get": {
+                "tags": [
+                    "Transaction"
+                ],
+                "summary": "Get Transactions",
+                "description": "Get My Transactions",
+                "operationId": "authGetTransactions",
+                "responses": {
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sorry, wrong invalid email or name. Please try again"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/notifications": {
+            "post": {
+                "tags": [
+                    "Transaction"
+                ],
+                "summary": "Get Notifications",
+                "description": "Get My Notifications",
+                "operationId": "authGetNotifications",
+                "requestBody": {
+                    "description": "Pass per_page and page number for pagination",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "page",
+                                    "per_page"
+                                ],
+                                "properties": {
+                                    "page": {
+                                        "type": "integer",
+                                        "format": "page",
+                                        "example": 1
+                                    },
+                                    "per_page": {
+                                        "type": "integer",
+                                        "format": "per_page",
+                                        "example": 10
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sorry, wrong invalid email or name. Please try again"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/support/email": {
+            "post": {
+                "tags": [
+                    "Support"
+                ],
+                "summary": "Send Email to support team",
+                "description": "Send email to support team with information filled in submit form",
+                "operationId": "authSendMailToSupport",
+                "requestBody": {
+                    "description": "Send information filled in form to the support team via email",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "subject",
+                                    "transaction_id",
+                                    "issue_details",
+                                    "attachment"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "example@test.com"
+                                    },
+                                    "subject": {
+                                        "type": "string",
+                                        "format": "subject",
+                                        "example": "Brief issue"
+                                    },
+                                    "transaction_id": {
+                                        "type": "numeric",
+                                        "format": "transaction_id",
+                                        "example": 2
+                                    },
+                                    "issue_details": {
+                                        "type": "string",
+                                        "format": "issue_details",
+                                        "example": "payment for test"
+                                    },
+                                    "attachment": {
+                                        "type": "string",
+                                        "format": "attachment",
+                                        "example": "image_name.jpg"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sorry, wrong credentials. Please try again"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/users/search_by_phone": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Search user with given phone number",
+                "description": "Search user by given phone number",
+                "operationId": "authSearchUser",
+                "requestBody": {
+                    "description": "Search user by given phone number",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "phone"
+                                ],
+                                "properties": {
+                                    "phone": {
+                                        "type": "string",
+                                        "format": "phone",
+                                        "example": "9632587410"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sorry, wrong credentials. Please try again"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/users/search_by_multiple_phones": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Search users with given phone numbers list",
+                "description": "Search users with given phone numbers list",
+                "operationId": "authSearchUsers",
+                "requestBody": {
+                    "description": "Search users with given phone numbers list",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "contact_list"
+                                ],
+                                "properties": {
+                                    "contact_list": {
+                                        "type": "array",
+                                        "format": "contact_list",
+                                        "example": "[{'name' : 'contact1','phone' :  '7410258963'}, { 'name' : 'contact2', 'phone' : '8520147963'}]"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sorry, wrong credentials. Please try again"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/users": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get All Users and Requests made and payments done",
+                "description": "Get all app users and Requests made and payments done",
+                "operationId": "authGetUsers",
+                "responses": {
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sorry, wrong invalid email or name. Please try again"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/notifications/read": {
+            "get": {
+                "tags": [
+                    "Transaction"
+                ],
+                "summary": "Set all current notifications to read",
+                "description": "Set all current notifications to read",
+                "operationId": "authReadNotifications",
+                "responses": {
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sorry, wrong invalid email or name. Please try again"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/setings/notifications": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update Notification settings to ON or OFF",
+                "description": "Update Notification settings to ON or OFF",
+                "operationId": "authSearchUser",
+                "requestBody": {
+                    "description": "Update Notification settings to ON or OFF according to type and value provided. type = 0 for email_notification and 1 for push_notification and value is 0 for OFF and 1 for ON.",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "type",
+                                    "value"
+                                ],
+                                "properties": {
+                                    "type": {
+                                        "type": "integer",
+                                        "format": "type",
+                                        "example": "0"
+                                    },
+                                    "value": {
+                                        "type": "integer",
+                                        "format": "value",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sorry, wrong credentials. Please try again"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/currency_conversion/get": {
+            "get": {
+                "tags": [
+                    "Currency conversion"
+                ],
+                "summary": "Get currency conversion rates for Kenya and India.",
+                "description": "Get currency conversion rates for Kenya and India.",
+                "operationId": "getConversionRates",
+                "responses": {
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sorry, wrong invalid email or name. Please try again"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearer_token": {
+                "type": "http",
+                "description": "Enter token in format (Bearer <token>)",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "security": [
+        []
+    ]
+}
